@@ -1,0 +1,36 @@
+
+header {
+    display: grid;
+    position: relative;
+    grid-row: 1;
+    grid-column: 1 / span 2;
+    padding: 1em;
+
+    grid-template-rows: auto;
+    grid-template-columns: 1fr auto;
+
+    background-color: blue;
+}
+
+#header-logo {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+#header-navbar {
+    grid-row: 1;
+    grid-column: 2;
+}
+
+.header-navbar-item {
+    display: inline-block;
+    color: white;
+    list-style-type: none;
+    padding: 14px 16px;
+}
+
+.header-navbar-item > a {
+    color: white;
+    font-size: large;
+    text-decoration-line: none;
+}
