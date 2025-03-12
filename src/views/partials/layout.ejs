@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Document Properties -->
+        <title><%= title %> - Lockin' Ringers</title>
+        <meta charset="UTF-8">
+        <meta name="keywords" content="barbershop, barbershop quartet, music, acapella, quartet, Lockin' Ringers">
+        <meta name="author" content="Lockin' Ringers">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+
+        <!-- Favicon Icon -->
+        <link rel="icon" type="image/x-icon", href="/resources/img/favicon.png">
+
+        <!-- CSS Style Files -->
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/footer.css">
+        <link rel="stylesheet" href="<%= pageStylesheet %>">
+    </head>
+    <body>
+        <%- include('partials/header') %>
+        <main><%- body %></main>
+        <%- include('partials/footer') %>
+    </body>
+</html>
