@@ -2,13 +2,14 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
+const pagePaths = require('./constants/pagePaths');
 
 const app = express();
 
 // Set EJS as templating engine
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
-app.set('layout', './partials/layout');
+app.set('layout', pagePaths.layoutPage);
 
 // Ensure Express knows where to find views
 app.set('views', path.join(__dirname, 'views'));
@@ -21,6 +22,7 @@ const homeRoutes = require('./routes/home');
 const aboutRoutes = require('./routes/about');
 const contactRoutes = require('./routes/contact');
 const socialMediaRoutes = require('./routes/social-media');
+
 app.use('/', homeRoutes);
 app.use('/about', aboutRoutes);
 app.use('/contact', contactRoutes);

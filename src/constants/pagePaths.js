@@ -1,10 +1,10 @@
 
 const pagePaths = {
     layoutPage: `partials/layout`,
-    homePage: `home`,
-    aboutPage: `about`,
-    contactPage: `contact`,
-    socialMediaPage: `social-media`
+    homePage: `pages/home`,
+    aboutPage: `pages/about`,
+    contactPage: `pages/contact`,
+    socialMediaPage: `pages/social-media`
 };
 
 module.exports = pagePaths;
