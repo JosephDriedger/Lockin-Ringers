@@ -5,6 +5,7 @@ header {
     grid-row: 1;
     grid-column: 1 / span 2;
     padding: 1em;
+    margin: 0;
 
     grid-template-rows: auto;
     grid-template-columns: 1fr auto;
