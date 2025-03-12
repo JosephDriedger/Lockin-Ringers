@@ -1,36 +1,138 @@
 
+// Library Imports
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
 const pagePaths = require('./constants/pagePaths');
+const cors = require('cors');
 
-const app = express();
+// Module Imports
+const Utils = require('./modules/utils');
 
-// Set EJS as templating engine
-app.set('view engine', 'ejs');
-app.use(expressLayouts);
-app.set('layout', pagePaths.layoutPage);
+// Constant Imports
+const StatusCodes = require('./constants/statusCodes');
 
-// Ensure Express knows where to find views
-app.set('views', path.join(__dirname, 'views'));
+// Message Imports
+const ServerMessages = require('./lang/en/serverMessages');
+const ErrorMessages = require('./lang/en/errorMessages');
 
-// Serve Static Files
-app.use(express.static(path.join(__dirname, 'public')));
+// Routes Imports
+const notFound = require('./routes/routes-not-found');
+const homeRoutes = require('./routes/routes-home');
+const aboutRoutes = require('./routes/routes-about');
+const socialMediaRoutes = require('./routes/routes-social-media');
+const contactRoutes = require('./routes/routes-contact');
 
-// Routes
-const homeRoutes = require('./routes/home');
-const aboutRoutes = require('./routes/about');
-const contactRoutes = require('./routes/contact');
-const socialMediaRoutes = require('./routes/social-media');
+class Server {
+    // Private Values
+    #port;
+    #app;
+    #server;
+    #allowedOrigins;
 
-app.use('/', homeRoutes);
-app.use('/about', aboutRoutes);
-app.use('/contact', contactRoutes);
-app.use('/social-media', socialMediaRoutes);
+    constructor(port) {
+        // Ensure only one instance exists
+        if (Server.instance)
+            return Server.instance;
 
+        // Configure App
+        this.#allowedOrigins = [undefined, process.env.DEV_LINK, process.env.PROD_LINK, process.env.DEPLOY_LINK];
+        this.#port = port;
+        this.#app = express();
+        this.#app.set("trust proxy", 1);
 
-// Ports
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+        // Configure Middleware
+        this.#initializeMiddleware();
+        
+        // Configure Routes
+        this.#initializeRoutes();
+
+        // Cache Instance to Server class
+        Server.instance = this;
+    }
+
+    // Initializes Server Middleware
+    #initializeMiddleware() {
+        this.#app.use(express.json());
+
+        // Set EJS as templating engine
+        this.#app.set('view engine', 'ejs');
+        this.#app.use(expressLayouts);
+        this.#app.set('layout', pagePaths.layoutPage);
+
+        // CORS
+        const corsOrigin = (origin, callback) => {
+            if (this.#allowedOrigins.includes(origin)) {
+                callback(null, true);
+                return;
+            }
+
+            const message = Utils.format(ServerMessages.notAllowedByCORS, origin);
+            callback(new Error(message));
+        };
+
+        const corsErrResponse = (err, req, res, next) => {
+            if (err.message.includes('CORS')) {
+                Utils.httpResponse(res, StatusCodes.FORBIDDEN, err.message);
+                return;
+            }
+
+            Utils.httpResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, ErrorMessages.internalServerError);
+        };
+
+        this.#app.use(cors({ origin: corsOrigin }));
+        this.#app.use(corsErrResponse);
+
+        // Serve Static Files
+        this.#app.use(express.static(path.join(__dirname, './public')));
+
+        // Ensure Express knows where to find views
+        this.#app.set('views', path.join(__dirname, './views'));
+    }
+
+    // Initializes Server Routes
+    #initializeRoutes() {
+        this.#app.use('/', homeRoutes);
+        this.#app.use('/about', aboutRoutes);
+        this.#app.use('/contact', contactRoutes);
+        this.#app.use('/social-media', socialMediaRoutes);
+        this.#app.use(notFound);
+    }
+
+    // Start the Server
+    start() {
+        // Turn On Server
+        this.#server = this.#app.listen(this.#port, () => {
+            const message = Utils.format(ServerMessages.serverListening, this.#port);
+            console.log(message);
+        });
+
+        // Handle PM2 Stop Signals
+        process.on('SIGINT', () => {
+            this.stop();
+            process.exit(0);
+        });
+
+        process.on('SIGTERM', () => {
+            this.stop();
+            process.exit(0);
+        });
+    }
+
+    // Stop the Server
+    stop() {
+        // Turn Off Server
+        if (this.#server) {
+            this.#server.close(() => {
+                const message = Utils.format(ServerMessages.serverStopped, this.#port);
+                console.log(message);
+            });
+
+            return;
+        }
+
+        console.log(ErrorMessages.serverFailToStop);
+    }
+}
+
+module.exports = Server;
