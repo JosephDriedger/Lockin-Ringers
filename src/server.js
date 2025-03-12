@@ -3,7 +3,6 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
-const pagePaths = require('./constants/pagePaths');
 const cors = require('cors');
 
 // Module Imports
@@ -11,6 +10,7 @@ const Utils = require('./modules/utils');
 
 // Constant Imports
 const StatusCodes = require('./constants/statusCodes');
+const pagePaths = require('./constants/pagePaths');
 
 // Message Imports
 const ServerMessages = require('./lang/en/serverMessages');
