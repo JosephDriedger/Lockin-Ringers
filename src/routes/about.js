@@ -4,9 +4,9 @@ const pagePaths = require('../constants/pagePaths');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    res.render(pagePaths.homePage, {
-       title: 'Home',
-       pageStylesheet: '/css/pages/home.css'
+    res.render(pagePaths.aboutPage, {
+       title: 'About',
+       pageStylesheet: '/css/pages/about.css'
     });
 });
 
