@@ -6,7 +6,8 @@ const router = express.Router();
 router.get('/', (req, res) => {
     res.render(pagePaths.aboutPage, {
        title: 'About',
-       pageStylesheet: '/css/pages/about.css'
+       pageStylesheet: '/css/pages/about.css',
+       pageScript: '/js/pages/about.js'
     });
 });
 

@@ -22,8 +22,15 @@
         <% } %>
     </head>
     <body>
+        <!-- Insert HTML Content -->
         <%- include('header') %>
         <main><%- body %></main>
         <%- include('footer') %>
+
+        <!-- JS Script Files -->
+        <script src="/js/script.js"></script>
+        <% if (pageScript) { %>
+            <script src="<%= pageScript %>"></script>
+        <% } %>
     </body>    
 </html>
