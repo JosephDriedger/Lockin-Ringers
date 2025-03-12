@@ -8,7 +8,7 @@
         <meta name="keywords" content="barbershop, barbershop quartet, music, acapella, quartet, Lockin' Ringers">
         <meta name="author" content="Lockin' Ringers">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
+        <meta name="description" content="A Canadian barbershop quartet composed of young singers.">
 
         <!-- Favicon Icon -->
         <link rel="icon" type="image/x-icon", href="/resources/img/favicon.png">
@@ -17,7 +17,9 @@
         <link rel="stylesheet" href="/css/style.css">
         <link rel="stylesheet" href="/css/header.css">
         <link rel="stylesheet" href="/css/footer.css">
-        <link rel="stylesheet" href="<%= pageStylesheet %>">
+        <% if (pageStylesheet) { %>
+            <link rel="stylesheet" href="<%= pageStylesheet %>">
+        <% } %>
     </head>
     <body>
         <%- include('partials/header') %>
