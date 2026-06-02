@@ -1,37 +1,58 @@
-
 header {
-    display: grid;
-    position: relative;
-    grid-row: 1;
-    grid-column: 1 / span 2;
-    padding: 1em;
-    margin: 0;
-
-    grid-template-rows: auto;
-    grid-template-columns: 1fr auto;
-
-    background-color: blue;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: var(--header-height);
+    background: rgba(8, 12, 26, 0.97);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
-#header-logo {
-    grid-row: 1;
-    grid-column: 1;
+.header-inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-#header-navbar {
-    grid-row: 1;
-    grid-column: 2;
+#header-logo a {
+    display: flex;
+    align-items: center;
 }
 
-.header-navbar-item {
-    display: inline-block;
-    color: white;
-    list-style-type: none;
-    padding: 14px 16px;
+#header-logo img {
+    height: 60px;
+    width: auto;
 }
 
-.header-navbar-item > a {
-    color: white;
-    font-size: large;
-    text-decoration-line: none;
+#header-navbar ul {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    list-style: none;
+}
+
+#header-navbar a {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+}
+
+#header-navbar a:hover {
+    color: var(--cream);
+}
+
+#header-navbar .btn {
+    color: var(--red);
+    padding: 0.55rem 1.4rem;
+    font-size: 0.75rem;
+}
+
+#header-navbar .btn:hover {
+    background: var(--red);
+    color: var(--cream);
 }

@@ -1,12 +1,13 @@
 
 const StatusCodes = require("../constants/statusCodes");
-const ServerMessages = require("../lang/en/serverMessages");
-const Utils = require("../modules/utils");
+const pagePaths = require("../constants/pagePaths");
 
 const notFound = (req, res) => {
-    const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
-    const message = Utils.format(ServerMessages.notFound, fullUrl);
-    Utils.httpResponse(res, StatusCodes.NOT_FOUND, message);
+    res.status(StatusCodes.NOT_FOUND).render(pagePaths.notFoundPage, {
+        title: '404 Not Found',
+        pageStylesheet: null,
+        pageScript: null
+    });
 };
 
 module.exports = notFound;
