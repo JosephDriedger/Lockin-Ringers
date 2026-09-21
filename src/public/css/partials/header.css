@@ -2,15 +2,14 @@ header {
     position: sticky;
     top: 0;
     z-index: 100;
-    height: var(--header-height);
-    background: rgba(8, 12, 26, 0.97);
-    border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(243, 233, 210, 0.96);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 2px 12px rgba(28, 35, 64, 0.12);
 }
 
 .header-inner {
-    height: 100%;
+    height: var(--header-height);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -19,40 +18,110 @@ header {
 #header-logo a {
     display: flex;
     align-items: center;
+    transition: transform 0.25s;
+}
+
+#header-logo a:hover {
+    transform: rotate(-4deg) translateY(-2px);
 }
 
 #header-logo img {
-    height: 60px;
+    height: 84px;
     width: auto;
 }
 
 #header-navbar ul {
     display: flex;
     align-items: center;
-    gap: 2.5rem;
+    gap: 2.25rem;
     list-style: none;
 }
 
 #header-navbar a {
-    color: var(--text-muted);
-    font-size: 0.82rem;
+    color: var(--navy);
+    font-family: var(--font-sign);
+    font-size: 0.95rem;
     font-weight: 500;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     transition: color 0.2s;
+    position: relative;
 }
 
-#header-navbar a:hover {
-    color: var(--cream);
+#header-navbar a:not(.btn)::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.2s;
+}
+
+#header-navbar a:not(.btn):hover {
+    color: var(--red);
+}
+
+#header-navbar a:not(.btn):hover::after {
+    transform: scaleX(1);
 }
 
 #header-navbar .btn {
-    color: var(--red);
-    padding: 0.55rem 1.4rem;
-    font-size: 0.75rem;
+    color: var(--cream);
+    background: var(--red);
+    padding: 0.5rem 1.3rem;
+    font-size: 0.85rem;
 }
 
 #header-navbar .btn:hover {
-    background: var(--red);
+    background: var(--navy);
+    border-color: var(--navy);
     color: var(--cream);
+}
+
+@media (max-width: 700px) {
+    #header-navbar ul {
+        gap: 1.1rem;
+    }
+
+    #header-navbar a {
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+    }
+
+    #header-logo img {
+        height: 64px;
+    }
+}
+
+@media (max-width: 560px) {
+    .header-inner {
+        padding: 0 1rem;
+    }
+
+    #header-navbar ul {
+        gap: 0.9rem;
+    }
+
+    #header-navbar a {
+        white-space: nowrap;
+        font-size: 0.74rem;
+        letter-spacing: 0.06em;
+    }
+
+    #header-navbar .btn {
+        padding: 0.45rem 0.75rem;
+        font-size: 0.72rem;
+    }
+
+    /* The logo already links home */
+    #header-navbar li:first-child {
+        display: none;
+    }
+
+    #header-logo img {
+        height: 56px;
+    }
 }

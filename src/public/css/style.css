@@ -1,17 +1,47 @@
 :root {
-    --bg: #080c1a;
-    --bg-section: #0c1221;
-    --bg-card: #111827;
-    --navy: #1a2472;
-    --red: #c41a1a;
-    --red-light: #e02222;
-    --gold: #c8a84b;
-    --gold-light: #dfc06a;
-    --cream: #f5ede0;
-    --text: #f5ede0;
-    --text-muted: #7a8fb0;
-    --border: #1a2035;
-    --header-height: 80px;
+    /* Palette — pulled from the boater-hat logo */
+    --paper: #f3e9d2;
+    --paper-dark: #e9dbbb;
+    --bg-card: #fbf6ea;
+    --navy: #16225e;
+    --navy-deep: #0f1843;
+    --red: #b3202a;
+    --red-light: #cf2a35;
+    --gold: #b8892f;
+    --gold-light: #d9ae55;
+    --cream: #fbf3e2;
+    --ink: #1c2340;
+    --text: var(--ink);
+    --text-muted: #5e5543;
+    --border: #d4c29a;
+
+    /* Legacy aliases */
+    --bg: var(--paper);
+    --bg-section: var(--paper-dark);
+
+    /* Type */
+    --font-display: 'Abril Fatface', 'Playfair Display', serif;
+    --font-script: 'Yellowtail', cursive;
+    --font-sign: 'Oswald', sans-serif;
+    --font-body: 'Lora', Georgia, serif;
+
+    /* Barber pole */
+    --barber-stripe: repeating-linear-gradient(
+        -45deg,
+        var(--red) 0 12px,
+        var(--cream) 12px 24px,
+        var(--navy) 24px 36px,
+        var(--cream) 36px 48px
+    );
+
+    /* Waistcoat pinstripe for dark sections */
+    --pinstripe: repeating-linear-gradient(
+        90deg,
+        rgba(251, 243, 226, 0.045) 0 1px,
+        transparent 1px 22px
+    );
+
+    --header-height: 84px;
 }
 
 *, *::before, *::after {
@@ -25,11 +55,14 @@ html {
 }
 
 body {
-    background-color: var(--bg);
+    background-color: var(--paper);
+    background-image:
+        radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.35) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 120%, rgba(120, 90, 40, 0.12) 0%, transparent 60%);
     color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    line-height: 1.7;
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.75;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -40,9 +73,11 @@ main {
 }
 
 h1, h2, h3, h4 {
-    font-family: 'Playfair Display', serif;
-    line-height: 1.2;
-    color: var(--text);
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--navy);
+    letter-spacing: 0.01em;
 }
 
 img {
@@ -51,13 +86,13 @@ img {
 }
 
 a {
-    color: var(--gold);
+    color: var(--red);
     text-decoration: none;
     transition: color 0.2s;
 }
 
 a:hover {
-    color: var(--gold-light);
+    color: var(--navy);
 }
 
 .container {
@@ -66,55 +101,113 @@ a:hover {
     padding: 0 2rem;
 }
 
+/* --- Barber pole strip --- */
+@keyframes barber-spin {
+    from { background-position: 0 0; }
+    to   { background-position: 67.88px 0; }
+}
+
+.barber-strip {
+    height: 8px;
+    background: var(--barber-stripe);
+    background-size: 67.88px 100%;
+    animation: barber-spin 3s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .barber-strip {
+        animation: none;
+    }
+}
+
 /* --- Shared typography --- */
 .section-subheading {
-    color: var(--gold);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.22em;
+    color: var(--red);
+    font-family: var(--font-sign);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
     margin-bottom: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.section-subheading::before {
+    content: '';
+    width: 28px;
+    height: 2px;
+    background: currentColor;
 }
 
 .section-heading {
-    font-size: clamp(2rem, 5vw, 3.25rem);
-    font-weight: 700;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
 }
 
 .section-divider {
-    width: 50px;
-    height: 2px;
-    background: var(--red);
+    width: 96px;
+    height: 8px;
+    background: var(--barber-stripe);
+    border-radius: 4px;
+    box-shadow: inset 0 0 0 1px rgba(28, 35, 64, 0.25);
     margin: 1.25rem 0 2.5rem;
 }
 
 .banner-description {
-    max-width: 580px;
-    font-size: 1.05rem;
-    color: var(--text-muted);
+    max-width: 600px;
+    font-size: 1.08rem;
+    color: rgba(251, 243, 226, 0.8);
     line-height: 1.85;
+}
+
+/* --- Ticket-style card (double rule border) --- */
+.card-vintage,
+.fact-card,
+.voice-card,
+.perform-card,
+.member-card,
+.social-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    box-shadow:
+        inset 0 0 0 5px var(--bg-card),
+        inset 0 0 0 6px var(--border),
+        0 2px 0 rgba(28, 35, 64, 0.06);
 }
 
 /* --- Page banner (About, Contact, Social) --- */
 .page-banner {
-    padding: 5rem 0 4rem;
-    background: var(--bg-section);
-    border-bottom: 1px solid var(--border);
+    padding: 5.5rem 0 4.5rem;
+    background-color: var(--navy);
+    background-image:
+        var(--pinstripe),
+        radial-gradient(ellipse 70% 80% at 50% 0%, rgba(179, 32, 42, 0.18) 0%, transparent 70%);
+    border-bottom: 8px solid transparent;
+    border-image: var(--barber-stripe) 8;
+}
+
+.page-banner .section-heading {
+    color: var(--cream);
+}
+
+.page-banner .section-subheading {
+    color: var(--gold-light);
 }
 
 /* --- Buttons --- */
 .btn {
     display: inline-block;
-    padding: 0.8rem 2.2rem;
-    border: 1.5px solid var(--red);
+    padding: 0.85rem 2.2rem;
+    border: 2px solid var(--red);
+    border-radius: 3px;
     color: var(--red);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
+    font-family: var(--font-sign);
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
     cursor: pointer;
     background: transparent;
 }
@@ -122,11 +215,13 @@ a:hover {
 .btn:hover {
     background: var(--red);
     color: var(--cream);
+    transform: translateY(-1px);
 }
 
 .btn-filled {
     background: var(--red);
     color: var(--cream);
+    box-shadow: 0 3px 0 #7d141b;
 }
 
 .btn-filled:hover {
@@ -136,13 +231,13 @@ a:hover {
 }
 
 .btn-outline-gold {
-    border-color: var(--gold);
-    color: var(--gold);
+    border-color: var(--navy);
+    color: var(--navy);
 }
 
 .btn-outline-gold:hover {
-    background: var(--gold);
-    color: #000;
+    background: var(--navy);
+    color: var(--cream);
 }
 
 /* --- 404 page --- */
@@ -153,13 +248,12 @@ a:hover {
 }
 
 .not-found-code {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-display);
     font-size: 8rem;
-    font-weight: 700;
     color: var(--red);
     line-height: 1;
     margin-bottom: 0.5rem;
-    opacity: 0.6;
+    text-shadow: 4px 4px 0 var(--paper-dark);
 }
 
 .not-found-page h1 {
