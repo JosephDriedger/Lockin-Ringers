@@ -1,6 +1,6 @@
-# Lockin' Ringers
+# Lock-in' Ringers
 
-Website for **Lockin' Ringers**, a Canadian barbershop quartet based in British Columbia.
+Website for **Lock-in' Ringers**, a Canadian barbershop quartet based in British Columbia.
 
 ## Tech Stack
 
