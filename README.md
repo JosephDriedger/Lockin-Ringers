@@ -8,7 +8,7 @@ Website for **Lock-in' Ringers**, a Canadian barbershop quartet based in British
 - **Framework:** Express.js
 - **Templating:** EJS with `express-ejs-layouts`
 - **Styling:** Vanilla CSS (custom properties, CSS Grid, Flexbox)
-- **Fonts:** Playfair Display + Inter (Google Fonts)
+- **Fonts:** Abril Fatface (headings), Lora (body), Oswald (labels and navigation), Yellowtail (script accents) — all from Google Fonts
 
 ## Project Structure
 
