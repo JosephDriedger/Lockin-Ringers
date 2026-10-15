@@ -11,34 +11,39 @@
 
     <section class="contact-section">
         <div class="container">
-            <form class="contact-form">
+            <form class="contact-form" id="contact-form" novalidate>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input id="name" type="text" placeholder="Your name">
+                        <input id="name" name="name" type="text" placeholder="Your name" maxlength="100" required autocomplete="name">
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input id="email" type="email" placeholder="your@email.com">
+                        <input id="email" name="email" type="email" placeholder="your@email.com" maxlength="254" required autocomplete="email">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="date">Performance Date(s)</label>
-                        <input id="date" type="text" placeholder="e.g. June 14, 2025">
+                        <input id="date" name="date" type="text" placeholder="e.g. June 14, 2025" maxlength="200">
                     </div>
                     <div class="form-group">
                         <label for="location">Performance Location</label>
-                        <input id="location" type="text" placeholder="City, Province">
+                        <input id="location" name="location" type="text" placeholder="City, Province" maxlength="200">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="message">Message / Details</label>
-                    <textarea id="message" rows="6" placeholder="Tell us about your event..."></textarea>
+                    <textarea id="message" name="message" rows="6" placeholder="Tell us about your event..." maxlength="5000" required></textarea>
+                </div>
+                <div class="form-honeypot" aria-hidden="true">
+                    <label for="website">Leave this field empty</label>
+                    <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
                 </div>
                 <div class="form-submit">
                     <button type="submit" class="btn btn-filled">Send Message</button>
                 </div>
+                <div id="form-status" class="form-status" role="status" aria-live="polite" hidden></div>
             </form>
         </div>
     </section>

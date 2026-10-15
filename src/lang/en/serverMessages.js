@@ -6,6 +6,7 @@ class ServerMessages {
     static tooManyRequests = "Too many requests, please try again later.";
     static notAllowedByCORS = "Not allowed by CORS: {0}";
     static notFound = "404 Not Found: {0}";
+    static contactSent = "Thanks! Your message has been sent. We'll get back to you shortly.";
 }
 
 module.exports = ServerMessages;

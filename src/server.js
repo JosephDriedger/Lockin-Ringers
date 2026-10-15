@@ -61,9 +61,19 @@ class Server {
         this.#app.set('layout', pagePaths.layoutPage);
 
         // CORS
-        const corsOrigin = (origin, callback) => {
-            if (this.#allowedOrigins.includes(origin)) {
-                callback(null, true);
+        const corsOrigin = (req, callback) => {
+            const origin = req.headers.origin;
+            let isSameOrigin = false;
+
+            // The site's own pages (e.g. the booking form) always send requests from the host they're served on
+            try {
+                isSameOrigin = Boolean(origin) && new URL(origin).host === req.headers.host;
+            } catch {
+                isSameOrigin = false;
+            }
+
+            if (isSameOrigin || this.#allowedOrigins.includes(origin)) {
+                callback(null, { origin: true });
                 return;
             }
 
@@ -80,7 +90,7 @@ class Server {
             Utils.httpResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, ErrorMessages.internalServerError);
         };
 
-        this.#app.use(cors({ origin: corsOrigin }));
+        this.#app.use(cors(corsOrigin));
         this.#app.use(corsErrResponse);
 
         // Serve Static Files
